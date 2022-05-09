@@ -6,7 +6,7 @@ import { AppError } from "../errors/AppError";
 
 import bcrypt from "bcrypt";
 import { Repository } from "typeorm";
-import { validate, ValidateNested } from "class-validator";
+import { validate } from "class-validator";
 
 export class UserService {
   private userRepository: Repository<User>;
