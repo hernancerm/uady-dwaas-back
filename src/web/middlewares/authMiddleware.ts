@@ -1,4 +1,4 @@
-import { JWT_CONFIG } from "../config/JWT_CONFIG";
+import { JWT_CONFIG } from "../../config/JWT_CONFIG";
 
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";

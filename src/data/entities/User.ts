@@ -1,3 +1,4 @@
+import { IsNotEmpty, ValidateNested } from "class-validator";
 import {
   BaseEntity,
   Column,
@@ -15,12 +16,15 @@ export class User extends BaseEntity {
   id: number;
 
   @Column({ unique: true })
+  @IsNotEmpty()
   name: string;
 
   @Column()
+  @IsNotEmpty()
   password: string;
 
   @Column()
+  @IsNotEmpty()
   email: string;
 
   @Column()
@@ -30,7 +34,8 @@ export class User extends BaseEntity {
   updatedAt: Date;
 
   @ManyToOne(() => UserRole)
-  userRole: UserRole;
+  @ValidateNested()
+  role: UserRole;
 
   @OneToMany(() => SavedItem, (savedItem: SavedItem) => savedItem.user)
   savedItems: SavedItem[];

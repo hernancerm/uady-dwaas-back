@@ -1,3 +1,4 @@
+import { IsNotEmpty } from "class-validator";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -6,5 +7,6 @@ export class UserRole extends BaseEntity {
   id: number;
 
   @Column({ unique: true })
+  @IsNotEmpty()
   name: string;
 }

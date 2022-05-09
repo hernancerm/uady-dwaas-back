@@ -1,4 +1,4 @@
-import { createLogger } from "../loggers/logger";
+import { createLogger } from "../../monitor/logger";
 
 import { Request, Response } from "express";
 
@@ -14,7 +14,7 @@ const obfuscate = (sensitiveObject: object): object => {
   return Object.assign(output, fieldsToObfuscate);
 };
 
-export const loggingMiddleware = (req: Request, res: Response, next: any) => {
+export const loggingMiddleware = (req: Request, _: Response, next: any) => {
   LOGGER.info(
     `Http request: ${req.method} ${req.originalUrl} - params: ${JSON.stringify(
       req.params

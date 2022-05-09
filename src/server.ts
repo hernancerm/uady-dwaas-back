@@ -1,13 +1,13 @@
-import { createLogger } from "./loggers/logger";
-import { authMiddleware } from "./middlewares/authMiddleware";
-import { AuthRouterFactory } from "./routers/impl/AuthRouterFactory";
-import { UserRouterFactory } from "./routers/impl/UserRouterFactory";
+import { createLogger } from "./monitor/logger";
+import { authMiddleware } from "./web/middlewares/authMiddleware";
+import { AuthRouterFactory } from "./web/routers/impl/AuthRouterFactory";
+import { UserRouterFactory } from "./web/routers/impl/UserRouterFactory";
+import { loggingMiddleware } from "./web/middlewares/loggingMiddleware";
 
 import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import { createConnection } from "typeorm";
-import { loggingMiddleware } from "./middlewares/loggingMiddleware";
 
 const LOGGER = createLogger(__filename);
 

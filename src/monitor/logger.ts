@@ -1,7 +1,7 @@
 import path from "path";
 
 import winston, { format } from "winston";
-import { TLoggerCreator } from "./types";
+import { LoggerCreator } from "./types";
 
 const { combine, label, timestamp } = format;
 
@@ -9,7 +9,7 @@ const loggingFormat = format.printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
-export const createLogger: TLoggerCreator = (filename: string) => {
+export const createLogger: LoggerCreator = (filename: string) => {
   return winston.createLogger({
     level: "debug",
     format: combine(

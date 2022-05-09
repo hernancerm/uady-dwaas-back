@@ -7,8 +7,8 @@ module.exports = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ["dist/entities/**/*.js"],
-  migrations: ["dist/migrations/**/*.js"],
+  entities: ["dist/data/entities/**/*.js"],
+  migrations: ["dist/data/migrations/**/*.js"],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
 };
