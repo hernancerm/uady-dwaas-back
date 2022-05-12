@@ -88,4 +88,21 @@ export class SavedItemController {
     }
   };
 
+  updateSavedItem = async (req: Request, res: Response): Promise<Response> => {
+    LOGGER.debug("Function call: updateSavedItem with id " + req.params.id + " and rating " + req.body.rating);
+    try {
+      const updatedItem = await this.savedItemService.updateSavedItem(Number(req.params.id), Number(req.body.rating));
+      return res.status(200).json(updatedItem);
+    } catch (e: any) {
+      LOGGER.error(e.stack);
+      if (e instanceof AppError) {
+        switch (e.code) {
+          case AppErrorCode.SYS02.code:
+            return res.status(500).json(e.getSummary());
+        }
+      }
+      return res.status(500).json(new AppError(AppErrorCode.SYS01));
+    }
+  };
+
 }

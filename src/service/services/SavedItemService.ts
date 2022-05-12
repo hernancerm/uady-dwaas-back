@@ -84,4 +84,24 @@ export class SavedItemService {
     }
   }
 
+  updateSavedItem = async (itemId:number, rating:number) => {
+    try {
+      //Validate saved item existence
+      const storedSavedItem = await this.savedItemRepository.findOne({
+        where: {id: itemId},
+        relations: ['savedItemType'],
+      });
+      if (!storedSavedItem) {
+        return Promise.reject(new AppError(AppErrorCode.SER02));
+      }
+
+      return await this.savedItemRepository.save({
+        ...storedSavedItem,
+        user_rating:rating
+      });
+    } catch (e: any) {
+      return Promise.reject(new AppError(AppErrorCode.SYS02));
+    }
+  }
+
 }
