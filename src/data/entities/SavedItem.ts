@@ -17,6 +17,9 @@ export class SavedItem extends BaseEntity {
   third_party_url: string;
 
   @Column()
+  third_party_resource_id: number;
+
+  @Column()
   user_rating: number;
 
   @ManyToOne(() => User, (user: User) => user.savedItems)
