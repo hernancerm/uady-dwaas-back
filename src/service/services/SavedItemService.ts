@@ -58,6 +58,7 @@ export class SavedItemService {
       }
       const assembleItem: SavedItem = Object.assign(new SavedItem(), {
         user_rating: savedItem.user_rating,
+        third_party_resource_id: savedItem.third_party_resource_id,
         third_party_url: savedItem.third_party_url,
         user: storedUser,
         savedItemType: storedItemType,
