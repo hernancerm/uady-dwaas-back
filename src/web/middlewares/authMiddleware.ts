@@ -19,10 +19,11 @@ export const authMiddleware = (
     return res.sendStatus(403);
   }
 
-  jwt.verify(authHeader.split(" ")[1], JWT_CONFIG.secret, (error) => {
+  jwt.verify(authHeader.split(" ")[1], JWT_CONFIG.secret, (error, decoded) => {
     if (error) {
       return res.sendStatus(401);
     }
+    res.locals.user = decoded;
     next();
   });
 };
