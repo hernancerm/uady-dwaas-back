@@ -8,6 +8,7 @@ import "reflect-metadata";
 import express from "express";
 import cors from "cors";
 import { createConnection } from "typeorm";
+import { SavedItemRouterFactory } from "./web/routers/impl/SavedItemRouterFactory";
 
 const LOGGER = createLogger(__filename);
 
@@ -28,6 +29,7 @@ createConnection().then(() => {
   // Routers.
   app.use("/api/auth", new AuthRouterFactory().make());
   app.use("/api/users", new UserRouterFactory().make());
+  app.use("/api/items", new SavedItemRouterFactory().make());
 });
 
 app.listen(port, host);
