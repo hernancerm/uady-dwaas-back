@@ -68,4 +68,20 @@ export class SavedItemService {
     }
   }
 
+  deleteSavedItem = async (itemId:number) => {
+    try {
+      //Validate saved item existence
+      const storedSavedItem = await this.savedItemRepository.findOne({
+        where: {id: itemId},
+        relations: ['savedItemType'],
+      });
+      if (!storedSavedItem) {
+        return Promise.reject(new AppError(AppErrorCode.SER02));
+      }
+      return await this.savedItemRepository.remove(storedSavedItem);
+    } catch (e: any) {
+      return Promise.reject(new AppError(AppErrorCode.SYS02));
+    }
+  }
+
 }

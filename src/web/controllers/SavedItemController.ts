@@ -57,8 +57,25 @@ export class SavedItemController {
     providedItem.user = Object.assign(new User(), req.body.user);
     providedItem.savedItemType = Object.assign(new SavedItemType(), req.body.type);
     try {
-      const savedItems = await this.savedItemService.createSavedItem(providedItem);
-      return res.status(200).json(savedItems);
+      const savedItem = await this.savedItemService.createSavedItem(providedItem);
+      return res.status(201).json(savedItem);
+    } catch (e: any) {
+      LOGGER.error(e.stack);
+      if (e instanceof AppError) {
+        switch (e.code) {
+          case AppErrorCode.SYS02.code:
+            return res.status(500).json(e.getSummary());
+        }
+      }
+      return res.status(500).json(new AppError(AppErrorCode.SYS01));
+    }
+  };
+
+  deleteSavedItem = async (req: Request, res: Response): Promise<Response> => {
+    LOGGER.debug("Function call: deleteSavedItem with id " + req.params.id);
+    try {
+      const deletedItem = await this.savedItemService.deleteSavedItem(Number(req.params.id));
+      return res.status(200).json(deletedItem);
     } catch (e: any) {
       LOGGER.error(e.stack);
       if (e instanceof AppError) {
