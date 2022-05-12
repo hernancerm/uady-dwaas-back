@@ -55,8 +55,10 @@ export class SavedItemController {
 
   createSavedItem = async (req: Request, res: Response): Promise<Response> => {
     LOGGER.debug("Function call: createSavedItem");
+    const securityContext = res.locals.user;
     const providedItem: SavedItem = Object.assign(new SavedItem(), req.body);
-    providedItem.user = Object.assign(new User(), req.body.user);
+    //Set the current auth user
+    providedItem.user = Object.assign(new User(), securityContext.user);
     providedItem.savedItemType = Object.assign(
       new SavedItemType(),
       req.body.type
