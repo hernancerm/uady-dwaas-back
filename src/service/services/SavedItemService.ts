@@ -1,13 +1,13 @@
-import { SavedItemType } from './../../data/entities/SavedItemType';
-import { SavedItem } from './../../data/entities/SavedItem';
+import { SavedItemType } from "./../../data/entities/SavedItemType";
+import { SavedItem } from "./../../data/entities/SavedItem";
 import { AppErrorCode } from "../errors/AppErrorCode";
 import { AppError } from "../errors/AppError";
 import { Repository } from "typeorm";
-import { User } from '../../data/entities/User';
+import { User } from "../../data/entities/User";
 
 export class SavedItemService {
   private savedItemRepository: Repository<SavedItem>;
-  private savedItemTypeRepository: Repository<SavedItemType>
+  private savedItemTypeRepository: Repository<SavedItemType>;
   private userRepository: Repository<User>;
 
   constructor(
@@ -28,22 +28,22 @@ export class SavedItemService {
     }
   };
 
-  getAllSavedItemByUser = async (userId:number) => {
+  getAllSavedItemByUser = async (userId: number) => {
     try {
       return await this.savedItemRepository.find({
-        where: {user: userId}
+        where: { user: userId },
       });
     } catch (e: any) {
       return Promise.reject(new AppError(AppErrorCode.SYS02));
     }
-  }
+  };
 
-  createSavedItem = async (savedItem:SavedItem) => {
+  createSavedItem = async (savedItem: SavedItem) => {
     try {
       //Validate user existence
       const storedUser = await this.userRepository.findOne({
-        where: {id: savedItem.user.id},
-        select:['id','name']
+        where: { id: savedItem.user.id },
+        select: ["id", "name"],
       });
       if (!storedUser) {
         return Promise.reject(new AppError(AppErrorCode.SER02));
@@ -60,20 +60,20 @@ export class SavedItemService {
         user_rating: savedItem.user_rating,
         third_party_url: savedItem.third_party_url,
         user: storedUser,
-        savedItemType: storedItemType
+        savedItemType: storedItemType,
       });
       return await this.savedItemRepository.save(assembleItem);
     } catch (e: any) {
       return Promise.reject(new AppError(AppErrorCode.SYS02));
     }
-  }
+  };
 
-  deleteSavedItem = async (itemId:number) => {
+  deleteSavedItem = async (itemId: number) => {
     try {
       //Validate saved item existence
       const storedSavedItem = await this.savedItemRepository.findOne({
-        where: {id: itemId},
-        relations: ['savedItemType'],
+        where: { id: itemId },
+        relations: ["savedItemType"],
       });
       if (!storedSavedItem) {
         return Promise.reject(new AppError(AppErrorCode.SER02));
@@ -82,14 +82,14 @@ export class SavedItemService {
     } catch (e: any) {
       return Promise.reject(new AppError(AppErrorCode.SYS02));
     }
-  }
+  };
 
-  updateSavedItem = async (itemId:number, rating:number) => {
+  updateSavedItem = async (itemId: number, rating: number) => {
     try {
       //Validate saved item existence
       const storedSavedItem = await this.savedItemRepository.findOne({
-        where: {id: itemId},
-        relations: ['savedItemType'],
+        where: { id: itemId },
+        relations: ["savedItemType"],
       });
       if (!storedSavedItem) {
         return Promise.reject(new AppError(AppErrorCode.SER02));
@@ -97,11 +97,10 @@ export class SavedItemService {
 
       return await this.savedItemRepository.save({
         ...storedSavedItem,
-        user_rating:rating
+        user_rating: rating,
       });
     } catch (e: any) {
       return Promise.reject(new AppError(AppErrorCode.SYS02));
     }
-  }
-
+  };
 }
