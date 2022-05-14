@@ -43,7 +43,7 @@
 							"script": {
 								"exec": [
 									"var res = pm.response.json();\r",
-									"pm.environment.set('Token', res.token);"
+									"pm.environment.set('jwt', res.token);"
 								],
 								"type": "text/javascript"
 							}
@@ -174,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"rating\": 8\r\n}",
+							"raw": "{\r\n    \"rating\": 7\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -207,7 +207,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user_rating\": 5,\r\n    \"third_party_url\": \"someUrl\",\r\n    \"third_party_resource_id\": 8129,\r\n    \"type\": { \"name\": \"anime\"}\r\n}",
+							"raw": "{\r\n    \"user_rating\": 6,\r\n    \"third_party_item_id\": 1234,\r\n    \"type\": { \"name\": \"manga\"}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -234,7 +234,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{Token}}",
+				"value": "{{jwt}}",
 				"type": "string"
 			}
 		]
