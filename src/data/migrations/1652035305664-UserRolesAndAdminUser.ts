@@ -1,4 +1,4 @@
-import { getCustomRepository, MigrationInterface } from "typeorm";
+import { getCustomRepository, MigrationInterface, QueryRunner } from "typeorm";
 import { User } from "../entities/User";
 import { UserRepository } from "../repositories/UserRepository";
 import { UserService } from "../../service/services/UserService";
@@ -6,17 +6,18 @@ import { UserRoleRepository } from "../repositories/UserRoleRepository";
 import { UserRole } from "../entities/UserRole";
 
 export class UserRolesAndAdminUser1652035305664 implements MigrationInterface {
-  public async up(): Promise<void> {
+  public async up(queryRunner: QueryRunner): Promise<void> {
     /* User roles. */
-    const admin: UserRole = new UserRole();
-    admin.name = "admin";
+    const adminUserRole = new UserRole();
+    adminUserRole.name = "admin";
 
-    const regular: UserRole = new UserRole();
-    regular.name = "regular";
+    const regularUserRole = new UserRole();
+    regularUserRole.name = "regular";
 
-    const userRoleRepository = getCustomRepository(UserRoleRepository);
-    userRoleRepository.save(admin);
-    userRoleRepository.save(regular);
+    const userRoleRepository =
+      queryRunner.connection.getCustomRepository(UserRoleRepository);
+    await userRoleRepository.save(adminUserRole);
+    await userRoleRepository.save(regularUserRole);
 
     /* Admin user. */
     const userService = new UserService(
