@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 export class AuthService {
   createJwtToken = (user: User): string => {
     return jwt.sign(
-      { user: { name: user.name, role: user.role.name } },
+      { user: { id: user.id, name: user.name, role: user.role.name } },
       JWT_CONFIG.secret
     );
   };
