@@ -14,7 +14,7 @@ export class SavedItem extends BaseEntity {
   id: number;
 
   @Column()
-  third_party_resource_id: number;
+  third_party_item_id: number;
 
   @Column()
   user_rating: number;
