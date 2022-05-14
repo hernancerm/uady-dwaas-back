@@ -14,9 +14,6 @@ export class SavedItem extends BaseEntity {
   id: number;
 
   @Column()
-  third_party_url: string;
-
-  @Column()
   third_party_resource_id: number;
 
   @Column()
