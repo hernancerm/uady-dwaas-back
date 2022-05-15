@@ -19,7 +19,7 @@ export class SavedItem extends BaseEntity {
   @Column()
   user_rating: number;
 
-  @ManyToOne(() => User, (user: User) => user.savedItems)
+  @ManyToOne(() => User, (user: User) => user.savedItems, {onDelete: "CASCADE"})
   user: User;
 
   @ManyToOne(() => SavedItemType)

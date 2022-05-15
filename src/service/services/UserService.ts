@@ -89,4 +89,21 @@ export class UserService {
       return Promise.reject(new AppError(AppErrorCode.SYS02, e));
     }
   };
+
+  deleteUser = async(userId:number) =>{
+    try {
+      //Validate user existence
+      const storedUser = await this.userRepository.findOne({
+        where: { id: userId },
+        select: ["id","name","email"]
+      });
+      if (!storedUser) {
+        return Promise.reject(new AppError(AppErrorCode.SER02));
+      }
+      return await this.userRepository.remove(storedUser);
+    } catch (e: any) {
+      console.log(e);
+      return Promise.reject(new AppError(AppErrorCode.SYS02));
+    }
+  };
 }
