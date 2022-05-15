@@ -67,6 +67,13 @@ export class UserService {
         user.password,
         await bcrypt.genSalt(JWT_CONFIG.salt)
       );
+      //Validate user existence
+      const foundUserCount = await this.userRepository.count({
+        where: { name: user.name },
+      });
+      if (foundUserCount  > 0) {
+        return Promise.reject(new AppError(AppErrorCode.SER04));
+      }
 
       const storedRole = await this.userRoleRepository.findOne({
         where: { name: user.role.name },
@@ -87,6 +94,23 @@ export class UserService {
       return await this.userRepository.save(assembledUser);
     } catch (e: any) {
       return Promise.reject(new AppError(AppErrorCode.SYS02, e));
+    }
+  };
+
+  deleteUser = async (userId: number) => {
+    try {
+      //Validate user existence
+      const storedUser = await this.userRepository.findOne({
+        where: { id: userId },
+        select: ["id", "name", "email"],
+      });
+      if (!storedUser) {
+        return Promise.reject(new AppError(AppErrorCode.SER02));
+      }
+      return await this.userRepository.remove(storedUser);
+    } catch (e: any) {
+      console.log(e);
+      return Promise.reject(new AppError(AppErrorCode.SYS02));
     }
   };
 }

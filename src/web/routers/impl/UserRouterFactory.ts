@@ -22,6 +22,7 @@ export class UserRouterFactory implements RouterFactory {
     const router = Router();
 
     router.route("/").get(this.userController.getAll);
+    router.route("/:id").delete(this.userController.deleteUserById);
 
     return router;
   }

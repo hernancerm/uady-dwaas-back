@@ -51,6 +51,27 @@ export class UserController {
             return res.status(400).json(e.getSummary());
           case AppErrorCode.SYS02.code:
             return res.status(500).json(e.getSummary());
+          case AppErrorCode.SER04.code:
+            return res.status(400).json(e.getSummary());
+        }
+      }
+      return res.status(500).json(new AppError(AppErrorCode.SYS01));
+    }
+  };
+
+  deleteUserById = async (req: Request, res: Response) => {
+    LOGGER.debug("Function call: deleteUserById with id = " + req.params.id);
+    try {
+      const deletedItem = await this.userService.deleteUser(
+        Number(req.params.id)
+      );
+      return res.status(200).json(deletedItem);
+    } catch (e: any) {
+      LOGGER.error(e.stack);
+      if (e instanceof AppError) {
+        switch (e.code) {
+          case AppErrorCode.SYS02.code:
+            return res.status(500).json(e.getSummary());
         }
       }
       return res.status(500).json(new AppError(AppErrorCode.SYS01));
