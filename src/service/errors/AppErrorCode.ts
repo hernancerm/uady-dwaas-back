@@ -15,6 +15,8 @@ export class AppErrorCode {
   static SER02 = new AppErrorCode("SER02", "Entity not found error");
   /** Authentication error */
   static SER03 = new AppErrorCode("SER03", "Authentication error");
+  /** Entity already exists */
+  static SER04 = new AppErrorCode("SER04", "Entity already exists");
 
   // System exceptions.
 

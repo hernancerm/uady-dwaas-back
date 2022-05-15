@@ -67,6 +67,13 @@ export class UserService {
         user.password,
         await bcrypt.genSalt(JWT_CONFIG.salt)
       );
+      //Validate user existence
+      const userExists = await this.userRepository.count({
+        where: { email: user.email },
+      });
+      if (userExists>0) {
+        return Promise.reject(new AppError(AppErrorCode.SER04));
+      }
 
       const storedRole = await this.userRoleRepository.findOne({
         where: { name: user.role.name },

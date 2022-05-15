@@ -51,6 +51,8 @@ export class UserController {
             return res.status(400).json(e.getSummary());
           case AppErrorCode.SYS02.code:
             return res.status(500).json(e.getSummary());
+          case AppErrorCode.SER04.code:
+            return res.status(400).json(e.getSummary());
         }
       }
       return res.status(500).json(new AppError(AppErrorCode.SYS01));
