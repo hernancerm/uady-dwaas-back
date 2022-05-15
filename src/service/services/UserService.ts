@@ -68,10 +68,10 @@ export class UserService {
         await bcrypt.genSalt(JWT_CONFIG.salt)
       );
       //Validate user existence
-      const userExists = await this.userRepository.count({
-        where: { email: user.email },
+      const foundUserCount = await this.userRepository.count({
+        where: { name: user.name },
       });
-      if (userExists > 0) {
+      if (foundUserCount  > 0) {
         return Promise.reject(new AppError(AppErrorCode.SER04));
       }
 
