@@ -71,7 +71,7 @@ export class UserService {
       const userExists = await this.userRepository.count({
         where: { email: user.email },
       });
-      if (userExists>0) {
+      if (userExists > 0) {
         return Promise.reject(new AppError(AppErrorCode.SER04));
       }
 
@@ -97,12 +97,12 @@ export class UserService {
     }
   };
 
-  deleteUser = async(userId:number) =>{
+  deleteUser = async (userId: number) => {
     try {
       //Validate user existence
       const storedUser = await this.userRepository.findOne({
         where: { id: userId },
-        select: ["id","name","email"]
+        select: ["id", "name", "email"],
       });
       if (!storedUser) {
         return Promise.reject(new AppError(AppErrorCode.SER02));

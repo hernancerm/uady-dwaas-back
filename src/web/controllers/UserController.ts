@@ -76,5 +76,5 @@ export class UserController {
       }
       return res.status(500).json(new AppError(AppErrorCode.SYS01));
     }
-  }
+  };
 }
