@@ -38,6 +38,17 @@ export class SavedItemService {
     }
   };
 
+  getAllSavedItemByUserAndType = async (userId: number, resourceTypeName: string) => {
+    try {
+      return await this.savedItemRepository.find({
+        where: { user: userId, savedItemType:{name: resourceTypeName} },
+        relations: ["savedItemType"]
+      });
+    } catch (e: any) {
+      return Promise.reject(new AppError(AppErrorCode.SYS02));
+    }
+  };
+
   createSavedItem = async (savedItem: SavedItem) => {
     try {
       //Validate user existence
