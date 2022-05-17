@@ -71,7 +71,7 @@ export class UserService {
       const foundUserCount = await this.userRepository.count({
         where: { name: user.name },
       });
-      if (foundUserCount  > 0) {
+      if (foundUserCount > 0) {
         return Promise.reject(new AppError(AppErrorCode.SER04));
       }
 

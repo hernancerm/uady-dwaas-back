@@ -54,14 +54,18 @@ export class SavedItemController {
   };
 
   getAllByType = async (req: Request, res: Response): Promise<Response> => {
-    LOGGER.debug("Function call: getAllByUserIdAndType with resource type " + req.params.type);
+    LOGGER.debug(
+      "Function call: getAllByUserIdAndType with resource type " +
+        req.params.type
+    );
     const securityContext = res.locals.user;
     const user = Object.assign(new User(), securityContext.user);
     try {
-      const savedItems = await this.savedItemService.getAllSavedItemByUserAndType(
-        user.id,
-        req.params.type
-      );
+      const savedItems =
+        await this.savedItemService.getAllSavedItemByUserAndType(
+          user.id,
+          req.params.type
+        );
       return res.status(200).json(savedItems);
     } catch (e: any) {
       LOGGER.error(e.stack);
