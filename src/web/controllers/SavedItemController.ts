@@ -149,4 +149,29 @@ export class SavedItemController {
       return res.status(500).json(new AppError(AppErrorCode.SYS01));
     }
   };
+
+  findItemInUserSavedItems = async (req: Request, res: Response): Promise<Response> => {
+    LOGGER.debug(
+      "Function call: findItemInUserSavedItems with id " +
+        req.params.jikanId
+    );
+    //Get Auth user
+    const authUser = Object.assign(new User(), res.locals.user);
+    try {
+      const savedItem = await this.savedItemService.findSavedItemByJikanId(
+        Number(req.params.jikanId),
+        authUser.user
+      );
+      return res.status(200).json(savedItem);
+    } catch (e: any) {
+      LOGGER.error(e.stack);
+      if (e instanceof AppError) {
+        switch (e.code) {
+          case AppErrorCode.SER02.code:
+            return res.status(500).json(e.getSummary());
+        }
+      }
+      return res.status(500).json(new AppError(AppErrorCode.SYS01));
+    }
+  };
 }

@@ -117,4 +117,18 @@ export class SavedItemService {
       return Promise.reject(new AppError(AppErrorCode.SYS02));
     }
   };
+
+  findSavedItemByJikanId = async (jikanId: number, authUser:User) => {
+    try {
+      const storedSavedItem = await this.savedItemRepository.findOne({
+        where: { third_party_item_id: jikanId , user:authUser}
+      });
+      if (!storedSavedItem) {
+        return Promise.reject(new AppError(AppErrorCode.SER02));
+      }
+      return storedSavedItem;
+    } catch (e: any) {
+      return Promise.reject(new AppError(AppErrorCode.SYS02));
+    }
+  };
 }

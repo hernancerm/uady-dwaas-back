@@ -29,6 +29,7 @@ export class SavedItemRouterFactory implements RouterFactory {
     router.route("/").post(this.savedItemController.createSavedItem);
     router.route("/:id").delete(this.savedItemController.deleteSavedItem);
     router.route("/:id").put(this.savedItemController.updateSavedItem);
+    router.route("/:jikanId").get(this.savedItemController.findItemInUserSavedItems);
 
     return router;
   }
