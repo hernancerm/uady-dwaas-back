@@ -275,6 +275,30 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Find item in user saved items by jikan Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/items/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1706"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
